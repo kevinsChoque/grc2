@@ -361,6 +361,7 @@ var po='';
 	var obj;
 	var estado;
 	var arc;
+    // voy a cambiar como estaba antes, si quiero volver a ese cambio q ise ultimo de susbir todo desde un mismo formulario puedo volver a este commit
     function guardarCotPro()
     {
     	let banGarantia = true;
