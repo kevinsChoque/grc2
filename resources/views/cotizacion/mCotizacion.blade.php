@@ -144,9 +144,10 @@ function showDataCotizacion(r)
     $('.fileCotizacion').html(r.cot.archivo);
     $('.fileCotizacion').attr('href',dir+'/'+r.cot.archivo);
 
+    var preVisualizador = "<embed src='http://localhost/grc2/public/cotizacion/archivo/"+r.cot.archivo+"' id='pdfViewer' class='w-100 h-100'>";//este es el que ase embebida del documento con push
     $('#pdfViewer').attr('src',dir+'/'+r.cot.archivo);
     // var estees = "<embed src='http://localhost/grc/public/cotizacion/archivo/1699541524_Cotizaciones(1).pdf' id='pdfViewer' class='w-100 h-100'>";
-    var preVisualizador = "<embed src='http://localhost/grc/public/cotizacion/archivo/"+r.cot.archivo+"' id='pdfViewer' class='w-100 h-100'>";
+    
     $('.contentPdf').html(preVisualizador);
     // showPDFPreview(r.cot.archivo);
     // -----

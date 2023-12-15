@@ -19,12 +19,36 @@
 
 <div class="container-fluid mt-3">
     <div class="card">
+        <div class="card-body p-0">
+            <h3 class="text-center font-weight-bold font-italic m-0">MIS COTIZACIONES</h3>
+        </div>
+    </div>
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+        <h5 class="font-weight-bold"><i class="icon fas fa-info"></i> Culminar cotizacion:</h5>
+        <!-- <div class="row">
+        </div> -->
+        <ol class="m-0">
+            <li class="font-weight-bold font-italic mb-2">Descarga los formatos asiendo click en el boton <button type="button" class="btn btn-sm btn-primary"><i class="fa fa-download"></i></button></li>
+            <li class="font-weight-bold font-italic mb-2">Subir los formatos asiendo click en el boton <button type="button" class="btn btn-sm btn-success ml-1"><i class="fa fa-paper-plane"></i> Enviar</button></li>
+            <li class="font-weight-bold font-italic">Una vez enviado los archivos nos mostrara el mensaje de cotizacion enviada. <span class="badge badge-light shadow"> Cotizacion Enviada</span></li>
+        </ol>
+    </div>
+    <div class="card">
         <div class="overlay overlayRegistros">
             <div class="spinner"></div>
         </div>
     	<div class="card-body">
-            
-    		<h3 class="text-center font-weight-bold font-italic">MIS COTIZACIONES</h3>
+    		<!-- <h3 class="text-center font-weight-bold font-italic">MIS COTIZACIONES</h3>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="alert alert-info alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h5><i class="icon fas fa-info"></i> Alert!</h5>
+                        Info alert preview. This alert is dismissable.
+                    </div>
+                </div>
+            </div> -->
     		<form id="fvbuscot">
     		<div class="row">
     			<div class="col-lg-4">
@@ -231,6 +255,7 @@
     {
         idCrp = id;
         $('#mSend').modal('show');
+        cleanFiles();
     }
     function estadoEnviado(estado)
     {

@@ -63,6 +63,57 @@ class PaCotRecProController extends Controller
     public function actGuardar(Request $r)
     {
         // dd($r->all());
+
+        $tPro = Session::get('proveedor');
+        $nombreOferta = $r->idCot.'_'.$tPro->idPro.'.pdf';
+
+        $tRec = TRecotizacion::where('idCot',$r->idCot)->where('estadoRecotizacion','1')->first();
+        if($tRec!=null)
+        {
+            $r->merge(['idRec' => $tRec->idRec]);
+        }
+        $r->merge(['archivo' => $nombreOferta]);
+        $r->merge(['idPro' => $tPro->idPro]);
+        $r->merge(['estadoCrp' => '0']);
+        $r->merge(['estado' => '1']);
+        $r->merge(['fr' => Carbon::now()]);
+        DB::beginTransaction();
+        // if(TCotrecpro::create($r->all()))
+        // if(true)
+        $tCrp = TCotrecpro::create($r->all());
+        if($tCrp)
+        {
+            // $this->saveDetalleProCot($r,'3');
+            if($this->saveDetalleProCot($r,$tCrp->idCrp))
+            {
+                // dd(gettype($r->file('archivos')));
+                if($r->file('archivos')!==null)
+                {
+                    for ($i=0; $i < count($r->file('archivos')) ; $i++) 
+                    { 
+                        $archivo = $r->file('archivos')[$i];
+                        $nombreArchivo = $this->arrayNombresFiles[$i]. '.' . $archivo->getClientOriginalExtension();
+                        $ruta = Storage::putFileAs('public/ofertas/'.$tPro->idPro.'/'.$tCrp->idCrp.'/', $archivo, $nombreArchivo);
+                    }
+                }
+                DB::commit();
+                return response()->json(['estado' => true, 'message' => 'El siguiente paso es para enviar los archivos, sin estos archivos no podra culminar con la COTIZACION y no se tomara en cuenta la postulacion.']);
+            }
+            else
+            {
+                DB::rollBack();
+                return response()->json(['estado' => false, 'message' => 'Error al registrar la postulacion.']);
+            }
+        }
+        else
+        {
+            DB::rollBack();
+            return response()->json(['estado' => false, 'message' => 'Error al registrar la postulacion']);
+        }
+    }
+    public function actGuardar_last_2funcionalidad_b(Request $r)
+    {
+        // dd($r->all());
         $tPro = Session::get('proveedor');
         $nombreOferta = $r->idCot.'_'.$tPro->idPro.'.pdf';
 
@@ -303,39 +354,113 @@ class PaCotRecProController extends Controller
     // }
     public function actSubirArchivo(Request $r)
     {
+        // dd($r->soloPdf==true);
+        // dd($r->all());
     	DB::beginTransaction();
-    	if ($r->hasFile('file')) 
-    	{
-    		$archivo = $r->file('file');
-            $nombreArchivo = time() . '_' . str_replace(' ', '',$archivo->getClientOriginalName());
-	        if (Storage::put('public/panel_administrativo/proveedor/cotizaciones/' . $nombreArchivo, file_get_contents($archivo))) 
-	        {
+        if($r->soloPdf=='true')
+        {
+            // dd('entro aki solo uno');
+        	if ($r->hasFile('pdfAll')) 
+        	{
+        		$archivo = $r->file('pdfAll');
+                $nombreArchivo = time() . '_' . str_replace(' ', '',$archivo->getClientOriginalName());
+                // $rutaArchivo = storage_path('app/public/ofertas/'.$idPro.'/'.$idCrp.'/35_47.pdf');
+    	        // if (Storage::put('public/panel_administrativo/proveedor/cotizaciones/' . $nombreArchivo, file_get_contents($archivo))) 
+                $p = Session::get('proveedor');
+                if (Storage::put('public/ofertas/'.$p->idPro.'/'.$r->idCrp.'/' . $nombreArchivo, file_get_contents($archivo))) 
+    	        {
 
-                $r->merge(['estadoCrp' => '1']);
-	        	$r->merge(['archivo' => $nombreArchivo]);
-	        	$tCrp = TCotrecpro::find($r->idCrp);
-	        	// dd($r->idCrp);
-	        	$tCrp->fill($r->all());
-	        	// if(TCotizacion::create($r->all()))
-        		if($tCrp->save())
-	        	{
-	        		DB::commit();
-	        		return response()->json(['estado' => true, 'message' => 'Se envio la cotizacion exitosamente.']);
-	        	}
-	        	else
-	        	{
-	        		DB::rollBack();
-	        		return response()->json(['estado' => false, 'message' => 'Error al registrar el envio de la cotizacion.']);
-	        	}
-	        } 
-	        else 
-	        {
-	        	DB::rollBack();
-	        	return response()->json(['estado' => false, 'message' => 'Error al guardar el archivo de cotizacion']);
-	        }
+                    $r->merge(['estadoCrp' => '1']);
+    	        	$r->merge(['archivo' => $nombreArchivo]);
+    	        	$tCrp = TCotrecpro::find($r->idCrp);
+    	        	// dd($r->idCrp);
+    	        	$tCrp->fill($r->all());
+    	        	// if(TCotizacion::create($r->all()))
+            		if($tCrp->save())
+    	        	{
+    	        		DB::commit();
+    	        		return response()->json(['estado' => true, 'message' => 'Se envio la cotizacion exitosamente.']);
+    	        	}
+    	        	else
+    	        	{
+    	        		DB::rollBack();
+    	        		return response()->json(['estado' => false, 'message' => 'Error al registrar el envio de la cotizacion.']);
+    	        	}
+    	        } 
+    	        else 
+    	        {
+    	        	DB::rollBack();
+    	        	return response()->json(['estado' => false, 'message' => 'Error al guardar el archivo de cotizacion']);
+    	        }
+            }
+            DB::rollBack();
+            return response()->json(['estado' => false, 'message' => 'Ingrese un archivo de cotización.']);
         }
-        DB::rollBack();
-        return response()->json(['estado' => false, 'message' => 'Ingrese un archivo de cotización.']);
+        else
+        {
+            // dd('entro aki varios');
+            $nombreArchivo = time() . '.pdf';
+            $p = Session::get('proveedor');
+            $pdfcll = $r->file('pdfCll');
+            $pdfdj = $r->file('pdfDj');
+            $pdfcci = $r->file('pdfCci');
+            $pdfanexo = $r->file('pdfA5');
+
+            // Crear una instancia de Fpdi
+            $pdf = new Fpdi();
+
+            // Combinar pdfcll
+            $pdf->setSourceFile($pdfcll->path());
+            for ($pagina = 1; $pagina <= $pdf->setSourceFile($pdfcll->path()); $pagina++) {
+                $tplIdx = $pdf->importPage($pagina);
+                $pdf->AddPage();
+                $pdf->useTemplate($tplIdx);
+            }
+
+            // Combinar pdfdj
+            $pdf->setSourceFile($pdfdj->path());
+            for ($pagina = 1; $pagina <= $pdf->setSourceFile($pdfdj->path()); $pagina++) {
+                $tplIdx = $pdf->importPage($pagina);
+                $pdf->AddPage();
+                $pdf->useTemplate($tplIdx);
+            }
+
+            // Combinar pdfcci
+            $pdf->setSourceFile($pdfcci->path());
+            for ($pagina = 1; $pagina <= $pdf->setSourceFile($pdfcci->path()); $pagina++) {
+                $tplIdx = $pdf->importPage($pagina);
+                $pdf->AddPage();
+                $pdf->useTemplate($tplIdx);
+            }
+
+            // Combinar pdfanexo
+            $pdf->setSourceFile($pdfanexo->path());
+            for ($pagina = 1; $pagina <= $pdf->setSourceFile($pdfanexo->path()); $pagina++) {
+                $tplIdx = $pdf->importPage($pagina);
+                $pdf->AddPage();
+                $pdf->useTemplate($tplIdx);
+            }
+            
+            $joinPdf = storage_path('app/public/ofertas/'.$p->idPro.'/'.$r->idCrp.'/'.$nombreArchivo);
+
+            $pdf->Output($joinPdf, 'F');
+            $r->merge(['estadoCrp' => '1']);
+            $r->merge(['archivo' => $nombreArchivo]);
+            $tCrp = TCotrecpro::find($r->idCrp);
+            // dd($r->idCrp);
+            $tCrp->fill($r->all());
+            // if(TCotizacion::create($r->all()))
+            if($tCrp->save())
+            {
+                DB::commit();
+                return response()->json(['estado' => true, 'message' => 'Se envio la cotizacion exitosamente.']);
+            }
+            else
+            {
+                DB::rollBack();
+                return response()->json(['estado' => false, 'message' => 'Error al registrar el envio de la cotizacion.']);
+            }
+        }
     }
     public function verArchivo($idPro,$idCrp,$nombreArchivo)
     {

@@ -119,7 +119,7 @@
 					</div>
 				</div> -->
     		</div>
-    		<hr>
+    		<!-- <hr>
     		<div class="row">
     			<div class="col-lg-12">
     				<div class="callout callout-info py-2 bg-teal">
@@ -158,7 +158,7 @@
                     </div>
     			</div>
     		</div>
-    		<hr>
+    		<hr> -->
     		<div class="row">
                 <div class="col-lg-12">
                 	<div class="table-responsive">
@@ -195,7 +195,10 @@
     	</div>
     	<div class="card-footer text-center">
     		<button type="button" class="btn btn-success guardarCotPro ml-2"><i class="fa fa-save"></i> Guardar Cotizacion</button>
-			<button type="button" class="btn btn-primary downloadCotLle"><i class="fa fa-file-pdf"></i> Descargar cotizacion llenada</button>
+			<!-- <button type="button" class="btn btn-primary downloadCotLle"><i class="fa fa-file-pdf"></i> Descargar cotizacion llenada</button> -->
+
+
+            
 			<!-- <a href="{{url('panelAdm/paCotRecPro/generarCot')}}" target="_blank" class="btn btn-primary shadow downloadCotLle">
                 <i class="fas fa-file-pdf"></i> Descargar Cotizacion Llenada
             </a> -->
@@ -352,16 +355,15 @@ var po='';
 	        dedica: {required: true,},
 	        // timeGarantia: {required: true,},
 
-	        pdfCll: {required: true,},
-	        pdfDj: {required: true,},
-	        pdfCci: {required: true,},
-	        pdfAnexo5: {required: true,},
+	        // pdfCll: {required: true,},
+	        // pdfDj: {required: true,},
+	        // pdfCci: {required: true,},
+	        // pdfAnexo5: {required: true,},
 	    };
 	}
 	var obj;
 	var estado;
 	var arc;
-    // voy a cambiar como estaba antes, si quiero volver a ese cambio q ise ultimo de susbir todo desde un mismo formulario puedo volver a este commit
     function guardarCotPro()
     {
     	let banGarantia = true;
@@ -413,10 +415,10 @@ var po='';
         arc=archivos;
     	
 		// console.log(miObjeto);
-		$('#pdfCll').rules('add', {required: true});
-		$('#pdfDj').rules('add', {required: true});
-		$('#pdfCci').rules('add', {required: true});
-		$('#pdfAnexo5').rules('add', {required: true});
+		// $('#pdfCll').rules('add', {required: true});
+		// $('#pdfDj').rules('add', {required: true});
+		// $('#pdfCci').rules('add', {required: true});
+		// $('#pdfAnexo5').rules('add', {required: true});
 
     	if($('#fvcotpro').valid()==false)
     	{return;}
