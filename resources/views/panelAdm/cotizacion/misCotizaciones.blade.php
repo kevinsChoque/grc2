@@ -57,6 +57,7 @@
 						<div class="col-sm-8">
                             <select name="anio" id="anio" class="form-control">
                                 <option disabled>Selecciona una opcion</option>
+                                <option value="0">Todos</option>
                                 @for ($i = 2000; $i <= date('Y'); $i++)
                                     <option value="{{ $i }}">{{ $i }}</option>
                                 @endfor
@@ -70,8 +71,9 @@
 						<div class="col-sm-8">
                             <select name="mes" id="mes" class="form-control">
                                 <option disabled selected>Selecciona una opcion</option>
-                                @foreach (['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] as $mes)
-                                    <option value="{{ $mes }}">{{ $mes }}</option>
+                                <option value="0">Todos</option>
+                                @foreach (['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] as $indice => $mes)
+                                    <option value="{{ $indice + 1 }}">{{ $mes }}</option>
                                 @endforeach
                             </select>
 						</div>
@@ -84,7 +86,7 @@
 							<!-- <input type="date" id="fechaInicial" name="fechaInicial" class="form-control"> -->
                             <select name="tipo" id="tipo" class="form-control">
                                 <option disabled>Selecciona una opcion</option>
-                                <option value="Todos" selected>Todos</option>
+                                <option value="0" selected>Todos</option>
                                 <option value="Bienes">Bienes</option>
                                 <option value="Servicios">Servicios</option>
                             </select>
@@ -114,12 +116,12 @@
                     <table id="registros" class="table table-hover table-bordered dt-responsive nowrap">
                         <thead class="thead-light">
                             <tr>
-                                <th class="text-center text-uppercase" data-priority="1">-NRO-</th>
+                                <th class="text-center text-uppercase" data-priority="1">NRO</th>
                                 <th class="text-center text-uppercase" data-priority="1">tipo</th>
-                                <th class="text-center text-uppercase" data-priority="1">-FECHA-</th>
+                                <th class="text-center text-uppercase" data-priority="1">FECHA</th>
                                 <th class="text-center text-uppercase" data-priority="2">nro de cotizacion</th>
                                 <th class="text-center text-uppercase" data-priority="3">concepto</th>
-                                <th class="text-center text-uppercase" data-priority="4">-monto-</th>
+                                <th class="text-center text-uppercase" data-priority="4">monto</th>
                                 <th class="text-center text-uppercase" data-priority="4">Estado</th>
                                 <th class="text-center text-uppercase" data-priority="1">Opc.</th>
                             </tr>
@@ -161,10 +163,10 @@
         // {msjSimple(false,"La fecha inicial debe ser menor a la fecha final."); return;}
         var formData = new FormData($("#fvbuscot")[0]);
         // $('.searchCot').prop('disabled',true); 
-        // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+        $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
         jQuery.ajax(
         { 
-            url: "{{ url('panelAdm/paCotizacion/searchMisCot') }}",
+            url: "{{ url('panelAdm/paCotRecPro/search') }}",
             method: 'post',
             data: formData,
             dataType: 'json',
@@ -176,6 +178,42 @@
                 console.log('----------------------');
                 console.log(r);
                 console.log('----------------------');
+                var html = '';
+                var opciones = '';
+                construirTabla();
+                for (var i = 0; i < r.data.length; i++) 
+                {
+                    if(r.data[i].estadoCrp=='1')
+                    {
+                        opciones = '<span class="badge badge-light shadow"> Cotizacion Enviada</span>';
+                    }
+                    else
+                    {
+                        opciones = '<button type="button" class="btn btn-sm btn-primary" onclick="showArchivos('+r.data[i].idCrp+');"><i class="fa fa-download" ></i></button>'+
+                            '<button type="button" class="btn btn-sm btn-success ml-1" onclick="mSend('+r.data[i].idCrp+');"><i class="fa fa-paper-plane"></i> Enviar</button>';
+                    }
+                    html += '<tr>' +
+                        '<td class="text-center font-weight-bold">' + (i+1) + '</td>' +
+                        '<td class="text-center font-weight-bold">' + novDato(r.data[i].tipo) + '</td>' +
+                        '<td class="text-center font-weight-bold">' + r.data[i].frCrp + '</td>' +
+                        '<td class="text-center">' + novDato(r.data[i].numeroCotizacion) + '</td>' +
+                        '<td class=""><p class="m-0 ocultarTextIzqNameUser">' + novDato(r.data[i].concepto) + '</p></td>' +
+                        '<td class="text-center">' + novDato('S/. '+r.data[i].total) + '</td>' +
+                        '<td class="text-center">' + estadoEnviado(r.data[i].estadoCrp) + '</td>' +
+                        '<td class="text-center">' + 
+                            opciones + 
+                            // '<button type="button" class="btn btn-sm btn-primary" onclick="showArchivos('+r.data[i].idCrp+');"><i class="fa fa-download" ></i></button>'+
+                            // '<button type="button" class="btn btn-sm btn-success ml-1" onclick="mSend('+r.data[i].idCrp+');"><i class="fa fa-paper-plane"></i> Enviar</button>'+
+
+                            // '<div class="btn-group btn-group-sm" role="group">'+
+                            //     '<button type="button" class="btn btn-info" title="Editar registro" onclick="cotizar('+r.data[i].idCot+');"><i class="far fa-file-alt" ></i></button>'+
+                            //     '<button type="button" class="btn btn-success" title="Editar registro" onclick="cotizar('+r.data[i].idCot+');"><i class="far fa-file-alt" ></i></button>'+
+                            // '</div>'+
+                        '</td></tr>';
+                }
+                $('#data').html(html);
+                initDatatable('registros');
+                $('.overlayRegistros').css('display','none');
                 // construirTabla();
                 // changeRegistros(r);
 

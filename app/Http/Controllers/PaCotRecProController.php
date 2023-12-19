@@ -348,10 +348,23 @@ class PaCotRecProController extends Controller
             ->get();
         return response()->json(["data"=>$registros]);
     }
-    // public function actSubirArchivo(Request $r)
-    // {
-
-    // }
+    public function actSearch(Request $r)
+    {
+        $anio='';$mes='';$tipo='';
+        if(!is_null($r->anio) && $r->anio!=0)
+        {$anio=" AND YEAR(p.fr) = ".$r->anio;}
+        if(!is_null($r->mes) && $r->mes!=0)
+        {$mes=" AND MONTH(p.fr) = ".$r->mes;}
+        if(!is_null($r->tipo) && $r->tipo!=0)
+        {$tipo=" AND c.tipo = '".$r->tipo."' ";}
+        $p = Session::get('proveedor');
+        $sql = "SELECT c.*, p.fr AS frCrp, p.estadoCrp, p.idCrp, p.total 
+            FROM cotrecpro p
+            LEFT JOIN cotizacion c ON c.idCot = p.idCot 
+            WHERE p.idPro = ".$p->idPro.$anio.$mes.$tipo." ORDER BY p.idCrp DESC";
+        $registros=DB::select($sql);
+        return response()->json(["data"=>$registros]);
+    }
     public function actSubirArchivo(Request $r)
     {
         // dd($r->soloPdf==true);
