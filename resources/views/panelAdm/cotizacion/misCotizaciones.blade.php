@@ -16,9 +16,8 @@
 </div>
 @endsection
 @section('contentPanelAdmin')
-
 <div class="container-fluid mt-3">
-    <div class="card">
+    <div class="card card-primary card-outline" style="display: none;">
         <div class="card-body p-0">
             <h3 class="text-center font-weight-bold font-italic m-0">MIS COTIZACIONES</h3>
         </div>
@@ -34,11 +33,12 @@
             <li class="font-weight-bold font-italic">Una vez enviado los archivos nos mostrara el mensaje de cotizacion enviada. <span class="badge badge-light shadow"> Cotizacion Enviada</span></li>
         </ol>
     </div>
-    <div class="card">
+    <div class="card card-primary card-outline">
         <div class="overlay overlayRegistros">
             <div class="spinner"></div>
         </div>
     	<div class="card-body">
+            <h3 class="text-center font-weight-bold font-italic m-0">MIS COTIZACIONES</h3>
     		<!-- <h3 class="text-center font-weight-bold font-italic">MIS COTIZACIONES</h3>
             <div class="row">
                 <div class="col-lg-12">
@@ -50,7 +50,7 @@
                 </div>
             </div> -->
     		<form id="fvbuscot">
-    		<div class="row">
+    		<div class="row mt-4">
     			<div class="col-lg-4">
     				<div class="form-group row">
 						<label class="col-sm-3 col-form-label">Año:</label>

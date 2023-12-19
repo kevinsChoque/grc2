@@ -35,6 +35,7 @@ class PaProveedorController extends Controller
         $tPro->fill($r->all());
         if($tPro->save())
         {
+            // dd($tPro);
         	session(['proveedor' => $tPro]);
             return response()->json(['estado' => true, 'message' => 'Operacion exitosa.']);
         }

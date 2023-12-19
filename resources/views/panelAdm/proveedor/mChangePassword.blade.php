@@ -80,7 +80,8 @@
                 // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
                 $('#modalChangePassword').modal('hide');
                 $('.saveChangePassword').prop('disabled',false);
-                msjRee(r);
+                // msjRee(r);
+                msgRee(r);
             }
         });
     }
