@@ -16,22 +16,28 @@
 </div>
 @endsection
 @section('contentPanelAdmin')
-<!-- <h1>-{{is_null(Session::get('proveedor')->tipoPersona)}}-</h1> -->
+<!-- <h1>{{Session::get('proveedor')->banco}}</h1> -->
 @if(is_null(Session::get('proveedor')->tipoPersona)
     || is_null(Session::get('proveedor')->numeroDocumento)
     || is_null(Session::get('proveedor')->direccion)
     || is_null(Session::get('proveedor')->correo)
     || is_null(Session::get('proveedor')->celular)
     || is_null(Session::get('proveedor')->usuario)
+    || is_null(Session::get('proveedor')->banco)
+    || is_null(Session::get('proveedor')->cci)
 )
 <script>
     $(document).ready( function () {
         $('.overlayPagina').css("display","none");
+        console.log("------------------------------");
         console.log("{{Session::get('proveedor')->idPro}}")
         console.log("{{Session::get('proveedor')->tipoPersona}}")
         console.log("{{Session::get('proveedor')->numeroDocumento}}")
         console.log("{{Session::get('proveedor')->tipoPersona}}")
         console.log("{{Session::get('proveedor')->tipoPersona}}")
+        console.log("{{Session::get('proveedor')->banco}}")
+        console.log("{{Session::get('proveedor')->cci}}")
+        console.log("------------------------------");
         Swal.fire({
             title: "COTIZACION",
             text: "Es necesario que complete sus datos personales.",

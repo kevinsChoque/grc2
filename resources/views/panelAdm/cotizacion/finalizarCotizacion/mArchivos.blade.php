@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header py-1 border-transparent" style="background-color: rgba(0, 0, 0, 0.03);">
-                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-user-doctor"></i> Archivos</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle"><i class="fa fa-file-pdf"></i> Archivos</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

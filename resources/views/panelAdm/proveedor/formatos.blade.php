@@ -22,6 +22,8 @@
     || is_null(Session::get('proveedor')->correo)
     || is_null(Session::get('proveedor')->celular)
     || is_null(Session::get('proveedor')->usuario)
+    || is_null(Session::get('proveedor')->banco)
+    || is_null(Session::get('proveedor')->cci)
 )
 <script>
     $(document).ready( function () {
@@ -50,56 +52,137 @@
 </script>
 @else
 <div class="container-fluid mt-3">
-    <div class="card">
-        
-    	<div class="card-body">
-    		<h3 class="text-center font-weight-bold font-italic">Formatos de cotizacion</h3>
+    <div class="card card-primary card-outline">
+        <div class="card-body">
+            <h3 class="text-center font-weight-bold font-italic">MIS FORMATOS</h3>
             <div class="row">
-                <div class="col-lg-2">
-                    <!-- <button class="btn btn-success shadow" onclick="showCci()">cci</button> -->
-                    <div class="card bg-teal shadow" style="cursor: pointer;" onclick="showDj()">
-                        <div class="card-body p-2">
-                            <p class="m-0 text-center"><i class="fa fa-file-pdf"></i> Declaracion Jurada</p>
+                <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="row">
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Descargar Declaración
+                                        Jurada</span>
+                                    <a href="{{route('declaracion-jurada')}}" target="_blank" class="btn btn-primary float-right">
+                                        <i class="fas fa-download"></i> Generar PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">CCI</span>
+                                    <a href="{{route('cci')}}" target="_blank" class="btn btn-primary float-right">
+                                        <i class="fas fa-download"></i> Generar PDF
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-4">
+                            <div class="info-box bg-light">
+                                <div class="info-box-content">
+                                    <span class="info-box-text text-center text-muted">Anexo 5</span>
+                                    <a href="{{route('anexo5')}}" target="_blank" class="btn btn-primary float-right">
+                                        <i class="fas fa-download"></i> Generar PDF
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="card bg-olive shadow" style="cursor: pointer;" onclick="showCci()">
-                        <div class="card-body p-2">
-                            <p class="m-0 text-center"><i class="fa fa-file-pdf"></i> CCI</p>
-                        </div>
-                    </div>
-                    <div class="card bg-lightblue shadow" style="cursor: pointer;" onclick="showAnexo5()">
-                        <div class="card-body p-2">
-                            <p class="m-0 text-center"><i class="fa fa-file-pdf"></i> Anexo 5</p>
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>Nuestros Formatos</h4><br>
+                            <div class="post">
+                                <div class="user-block">
+                                    <img class="img-circle img-bordered-sm"
+                                        src="https://cdn-icons-png.flaticon.com/512/2875/2875411.png"
+                                        alt="user image">
+                                    <span class="username">
+                                        <a href="#">Declaración Jurada</a>
+                                    </span>
+                                    <span class="description">Generado en base a tus datos.</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p>
+                                            La siguiente información esta generada en base a los datos que ingresaste, en caso de tener algun error en sus datos, dirijase a la sección "Mis Datos" para corregir los errores.
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-sm btn-primary float-right" onclick="showDj()">
+                                            <i class="far fa-fw fa-file-pdf"></i> Previsualizar PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post clearfix">
+                                <div class="user-block">
+                                    <img class="img-circle img-bordered-sm"
+                                        src="https://cdn-icons-png.flaticon.com/512/2875/2875411.png"
+                                        alt="User Image">
+                                    <span class="username">
+                                        <a href="#">Codigo de Cuenta Interbancaria</a>
+                                    </span>
+                                    <span class="description">Generado en base a tus datos</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p>
+                                            La siguiente información esta generada en base a los datos que ingresaste, en caso de tener algun error en sus datos, dirijase a la sección "Mis Datos" para corregir los errores.
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-sm btn-primary float-right" onclick="showCci()">
+                                            <i class="far fa-fw fa-file-pdf"></i> Previsualizar PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="post">
+                                <div class="user-block">
+                                    <img class="img-circle img-bordered-sm"
+                                        src="https://cdn-icons-png.flaticon.com/512/2875/2875411.png"
+                                        alt="user image">
+                                    <span class="username">
+                                        <a href="#">Anexo 5</a>
+                                    </span>
+                                    <span class="description">Generado en base a tus datos</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <p>
+                                            La siguiente información esta generada en base a los datos que ingresaste, en caso de tener algun error en sus datos, dirijase a la sección "Mis Datos" para corregir los errores.
+                                        </p>
+                                    </div>
+                                    <div class="col-4">
+                                        <button type="button" class="btn btn-sm btn-primary float-right" onclick="showAnexo5()">
+                                            <i class="far fa-fw fa-file-pdf"></i> Previsualizar PDF
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-10 contentPdf">
-                    <!-- <img src="https://img.freepik.com/vector-premium/icono-documento-icono-perfecto-pixel-profesional-optimizado-resoluciones-grandes-pequenas_775815-282.jpg" class="w-100"> -->
-                    <div class="card bg-secondary">
-                        <div class="overlay overlayRegistros">
-                            <i class="fas fa-3x fa-sync-alt fa-spin"></i>
-                        </div>
-                        <div class="card-body p-1">
-                            <div class="row banerPdf justify-content-center">
-                                <img src="{{asset('img/panelAdm/formatos.png')}}" class="w-50">
+                <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                    <div class="col-lg-12 contentPdf">
+                        <div class="card bg-secondary">
+                            <div class="overlay overlayRegistros">
+                                <i class="fas fa-3x fa-sync-alt fa-spin"></i>
                             </div>
-                            <div class="contentPreview" style="display: none;">
-                                <embed src="" id="pdfViewer" class="w-100" style="height: 100vh;">
+                            <div class="card-body p-1">
+                                <div class="row banerPdf justify-content-center">
+                                    <img src="{{asset('img/panelAdm/formatos.png')}}" class="w-50">
+                                </div>
+                                <div class="contentPreview" style="display: none;">
+                                    <embed src="" id="pdfViewer" class="w-100" style="height: 100vh;">
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- <embed src="" id="pdfViewer" class="w-100" style="height: 100vh;"> -->
                 </div>
             </div>
-    	</div>
-
-        <!-- <div class="card-footer py-1 border-transparent">
-            <button type="button" class="btn btn-success float-right save"><i class="fa fa-lock"></i> Cambiar contraseña</button>
-        </div> -->
-    </div>
-    <div class="card" style="display: none;">
-        <div class="card-body">
-            <!-- <embed src="" id="pdfViewer" class="w-75" style="height: 500px;"> -->
         </div>
     </div>
 </div>

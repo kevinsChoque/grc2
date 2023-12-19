@@ -46,6 +46,7 @@ class PaCotizacionController extends Controller
         // $registros = TCotizacion::where('estadoCotizacion','2')->orderBy('fr','desc')->get();
         return response()->json(["data"=>$registros]);
     }
+    
     public function actSearch(Request $r)
     {
     	// Tu array
@@ -95,6 +96,60 @@ class PaCotizacionController extends Controller
 	// SELECT * FROM cotizacion where estadoCotizacion=2 and tipo='Bienes' and( numeroCotizacion=369 or concepto like '%kevins%' or (fechaCotizacion>='2023-11-08' and fechaFinalizacion<='2023-12-09'));-->MEJOR
 	        // $sql = "SELECT * FROM cotizacion where estadoCotizacion=2 and ( tipo='".$r->tipo."' ".$numeroCotizacion.$concepto.')';
 	        $sql = "SELECT * FROM cotizacion where (estadoCotizacion=5 or estadoCotizacion=2) and tipo='".$r->tipo."' and ( idCot=0 ".$numeroCotizacion.$concepto.$entreFechas.')';
+        }
+        // dd($sql);
+        // $registros=DB::select($sql,$array);
+        $registros=DB::select($sql);
+        return response()->json(["data"=>$registros]);
+        // return datatables()->of($registros)->toJson(); 
+    }
+    public function searchMisCot(Request $r)
+    {
+        dd($r->all());
+        // Tu array
+        // $array = [1, 2, null, 4, null, 6];
+
+        // Filtra los elementos nulos
+        $arrayFiltrado = array_filter($r->all(), function ($ele) {
+            return $ele !== null;
+        });
+
+        // Cuenta los elementos restantes
+        $elementosNoNulos = count($arrayFiltrado);
+
+        // Imprime el resultado
+        // echo "Número de elementos no nulos: $elementosNoNulos";
+        // exit();
+  //    dd(gettype($r->all()));
+        // ------------------------------------------------------------------
+        if($elementosNoNulos==1)
+        {
+            $sql = "SELECT * FROM cotizacion where estadoCotizacion=2 and tipo='".$r->tipo."'";
+        }
+        else
+        {
+            $numeroCotizacion='';
+            $concepto='';
+            $entreFechas='';
+            if(!is_null($r->numeroCotizacion))
+            {
+                $numeroCotizacion=" or numeroCotizacion=".$r->numeroCotizacion;
+                // array_push($array, $r->numeroCotizacion);
+            }
+            if(!is_null($r->concepto))
+            {
+                $concepto=" or concepto like '%".$r->concepto."%'";
+                // array_push($array, $r->concepto);
+            }
+            if(!is_null($r->fechaInicial))
+            {
+                $entreFechas=" or ( fechaCotizacion>='".$r->fechaInicial."' and fechaFinalizacion<='".$r->fechaFinal."')";
+                // array_push($array, $r->concepto);
+            }
+    // SELECT * FROM cotizacion where estadoCotizacion=2 and (tipo='Bienes' or numeroCotizacion=369 or concepto like '%kevins%');-->malo
+    // SELECT * FROM cotizacion where estadoCotizacion=2 and tipo='Bienes' and( numeroCotizacion=369 or concepto like '%kevins%' or (fechaCotizacion>='2023-11-08' and fechaFinalizacion<='2023-12-09'));-->MEJOR
+            // $sql = "SELECT * FROM cotizacion where estadoCotizacion=2 and ( tipo='".$r->tipo."' ".$numeroCotizacion.$concepto.')';
+            $sql = "SELECT * FROM cotizacion where (estadoCotizacion=5 or estadoCotizacion=2) and tipo='".$r->tipo."' and ( idCot=0 ".$numeroCotizacion.$concepto.$entreFechas.')';
         }
         // dd($sql);
         // $registros=DB::select($sql,$array);

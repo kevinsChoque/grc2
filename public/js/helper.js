@@ -236,6 +236,16 @@ function msjSimple(estado,mensaje)
         title: mensaje
     });
 }
+function msgRee(result)
+{
+    Swal.fire({
+        position: "center",
+        icon: result.estado?"success":'error',
+        title: result.message,
+        showConfirmButton: false,
+        timer: 2500
+    });
+}
 function msjRee(result)
 {
     var Toast = Swal.mixin({

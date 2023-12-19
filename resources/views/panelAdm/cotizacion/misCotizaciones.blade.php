@@ -16,9 +16,8 @@
 </div>
 @endsection
 @section('contentPanelAdmin')
-
 <div class="container-fluid mt-3">
-    <div class="card">
+    <div class="card card-primary card-outline" style="display: none;">
         <div class="card-body p-0">
             <h3 class="text-center font-weight-bold font-italic m-0">MIS COTIZACIONES</h3>
         </div>
@@ -34,11 +33,12 @@
             <li class="font-weight-bold font-italic">Una vez enviado los archivos nos mostrara el mensaje de cotizacion enviada. <span class="badge badge-light shadow"> Cotizacion Enviada</span></li>
         </ol>
     </div>
-    <div class="card">
+    <div class="card card-primary card-outline">
         <div class="overlay overlayRegistros">
             <div class="spinner"></div>
         </div>
     	<div class="card-body">
+            <h3 class="text-center font-weight-bold font-italic m-0">MIS COTIZACIONES</h3>
     		<!-- <h3 class="text-center font-weight-bold font-italic">MIS COTIZACIONES</h3>
             <div class="row">
                 <div class="col-lg-12">
@@ -50,97 +50,58 @@
                 </div>
             </div> -->
     		<form id="fvbuscot">
-    		<div class="row">
-    			<div class="col-lg-4">
+    		<div class="row mt-4 justify-content-center">
+    			<div class="col-lg-2 col-sm-3">
     				<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Año:</label>
-						<div class="col-sm-6">
-							<!-- <input type="text" id="numeroCotizacion" name="numeroCotizacion" class="form-control"> -->
-                            <!-- <select name="anio" id="anio" class="form-control">
-                                <option disabled>Selecciona una opcion</option>
-                                <option value="2000">2000</option>
-                                <option value="2001">2001</option>
-                                <option value="2002">2002</option>
-                                <option value="2002">2002</option>
-                                <option value="2002">2002</option>
-                                <option value="2002">2002</option>
-                                <option value="2002">2002</option>
-                            </select> -->
-                            <!-- select>option[value=200$]*24{200$} -->
+						<label class="col-sm-4 col-form-label text-right">Año:</label>
+						<div class="col-sm-8">
                             <select name="anio" id="anio" class="form-control">
                                 <option disabled>Selecciona una opcion</option>
-                                <option value="2000">2000</option>
-                                <option value="2001">2001</option>
-                                <option value="2002">2002</option>
-                                <option value="2003">2003</option>
-                                <option value="2004">2004</option>
-                                <option value="2005">2005</option>
-                                <option value="2006">2006</option>
-                                <option value="2007">2007</option>
-                                <option value="2008">2008</option>
-                                <option value="2009">2009</option>
-                                <option value="2010">2010</option>
-                                <option value="2011">2011</option>
-                                <option value="2012">2012</option>
-                                <option value="2013">2013</option>
-                                <option value="2014">2014</option>
-                                <option value="2015">2015</option>
-                                <option value="2016">2016</option>
-                                <option value="2017">2017</option>
-                                <option value="2018">2018</option>
-                                <option value="2019">2019</option>
-                                <option value="2020">2020</option>
-                                <option value="2021">2021</option>
-                                <option value="2022">2022</option>
-                                <option value="2023" selected>2023</option>
+                                @for ($i = 2000; $i <= date('Y'); $i++)
+                                    <option value="{{ $i }}">{{ $i }}</option>
+                                @endfor
                             </select>
-                            
-                            
-
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-2 col-sm-3">
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Mes:</label>
-						<div class="col-sm-6">
+						<label class="col-sm-4 col-form-label text-right">Mes:</label>
+						<div class="col-sm-8">
                             <select name="mes" id="mes" class="form-control">
-                                <option disabled>Selecciona una opcion</option>
-                                <option value="Enero">Enero</option>
-                                <option value="Febrero">Febrero</option>
-                                <option value="Marzo">Marzo</option>
-                                <option value="Abril">Abril</option>
-                                <option value="Mayo">Mayo</option>
-                                <option value="Junio">Junio</option>
-                                <option value="Julio">Julio</option>
-                                <option value="Agosto">Agosto</option>
-                                <option value="Septiembre">Septiembre</option>
-                                <option value="Octubre">Octubre</option>
-                                <option value="Noviembre">Noviembre</option>
-                                <option value="Diciembre" selected>Diciembre</option>
+                                <option disabled selected>Selecciona una opcion</option>
+                                @foreach (['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'] as $mes)
+                                    <option value="{{ $mes }}">{{ $mes }}</option>
+                                @endforeach
                             </select>
 						</div>
 					</div>
 				</div>
-				<div class="col-lg-4">
+				<div class="col-lg-2 col-sm-3">
 					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Tipo:</label>
-						<div class="col-sm-6">
+						<label class="col-sm-4 col-form-label text-right">Tipo:</label>
+						<div class="col-sm-8">
 							<!-- <input type="date" id="fechaInicial" name="fechaInicial" class="form-control"> -->
                             <select name="tipo" id="tipo" class="form-control">
                                 <option disabled>Selecciona una opcion</option>
+                                <option value="Todos" selected>Todos</option>
                                 <option value="Bienes">Bienes</option>
                                 <option value="Servicios">Servicios</option>
                             </select>
 						</div>
 					</div>
 				</div>
+                <div class="col-lg-2 col-sm-3">
+                    <button type="button" class="btn btn-success float-right searchMisCot w-100">
+                        <i class="fa fa-search"></i> Buscar Cotizacion
+                    </button>
+                </div>
     		</div>
             </form>
     	</div>
-        <div class="card-footer py-1 border-transparent">
+        <div class="card-footer py-1 border-transparent" style="display: none;">
             <button type="button" class="btn btn-light clean"><i class="fa fa-eraser"></i> Limpiar campos de busqueda</button>
-            <button type="button" class="btn btn-success float-right searchCot"><i class="fa fa-search"></i> Buscar Cotizacion</button>
+            <button type="button" class="btn btn-success float-right searchMisCot"><i class="fa fa-search"></i> Buscar Cotizacion</button>
         </div>
     </div>
     <div class="card">
@@ -184,7 +145,46 @@
     	fillRegistros();
         $('.overlayPagina').css("display","none");
         $('.overlayRegistros').css("display","none");
+
+        // var fechaActual = new Date();
+        // var anioActual = new Date().getFullYear();
+        $('#anio').val(new Date().getFullYear());
     });
+    $('.searchMisCot').on('click',function(){
+        searchMisCot();
+    });
+    function searchMisCot()
+    {
+        // if($('#fvbuscot').valid()==false)
+        // {return;}
+        // if($('#fechaInicial').val()>$('#fechaFinal').val())
+        // {msjSimple(false,"La fecha inicial debe ser menor a la fecha final."); return;}
+        var formData = new FormData($("#fvbuscot")[0]);
+        // $('.searchCot').prop('disabled',true); 
+        // $( ".overlayRegistros" ).toggle( flip++ % 2 === 0 );
+        jQuery.ajax(
+        { 
+            url: "{{ url('panelAdm/paCotizacion/searchMisCot') }}",
+            method: 'post',
+            data: formData,
+            dataType: 'json',
+            processData: false, 
+            contentType: false, 
+            headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
+            success: function(r)
+            {
+                console.log('----------------------');
+                console.log(r);
+                console.log('----------------------');
+                // construirTabla();
+                // changeRegistros(r);
+
+
+                // $('.searchCot').prop('disabled',false); 
+                // msjRee(r);
+            }
+        });
+    }
     function fillRegistros()
     {
         $('.contenedorRegistros').css('display','block');
