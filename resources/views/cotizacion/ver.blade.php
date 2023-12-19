@@ -72,6 +72,8 @@
 </div>
 @include('cotizacion.mCotizacion')
 @include('cotizacion.recotizar.mRecotizar')
+@include('cotizacion.mEditar')
+@include('cotizacion.mAddItems')
 <script>
 localStorage.setItem("sbd",1);
 localStorage.setItem("sba",5);
@@ -102,7 +104,9 @@ localStorage.setItem("sba",5);
                     if(r.data[i].estadoCotizacion=='1')
                     {
                         opciones = '<button type="button" class="btn text-info"><i class="fa fa-plus" onclick="addItems('+r.data[i].idCot+');"></i></button>'+
+                            '<button type="button" class="btn text-success"><i class="fa fa-plus" onclick="addItems_b('+r.data[i].idCot+');"></i></button>'+
                             '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+r.data[i].idCot+');"><i class="fa fa-edit" ></i></button>'+
+                            '<button type="button" class="btn text-success" title="Editar registro" onclick="editar_b('+r.data[i].idCot+');"><i class="fa fa-edit" ></i></button>'+
                             '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].idCot+');"><i class="fa fa-trash"></i></button>';
                     }
                     if(r.data[i].estadoCotizacion == '2')
@@ -180,10 +184,29 @@ localStorage.setItem("sba",5);
     }
     function editar(id)
     {
+        loadCotizacion(id);
+        // $('#mEditar').modal('show');
+
+
+
+
+        // localStorage.setItem("idCot",id);
+        // window.location.href = "{{url('cotizacion/editar')}}";
+    }
+    function editar_b(id)
+    {
         localStorage.setItem("idCot",id);
         window.location.href = "{{url('cotizacion/editar')}}";
+
     }
     function addItems(id)
+    {
+        idCot = id;
+        $('#mAddItems').modal('show');
+        loadCotizacionMai(id);
+        loadItemsCotizacion(id);
+    }
+    function addItems_b(id)
     {
         localStorage.setItem("idCot",id);
         window.location.href = "{{url('cotizacion/addItems')}}";

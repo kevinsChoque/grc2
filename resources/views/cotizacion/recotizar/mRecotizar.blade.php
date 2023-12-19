@@ -17,10 +17,10 @@
                     <!-- <div class="col-lg-6" style="background: linear-gradient(to right, #c1d4e2, #8db7be);"> -->
                     <div class="col-lg-6 pr-3" style="border-right: 4px solid #505048;">
                         <div class="row">
-                            <div class="col-lg-12">
+                            <!-- <div class="col-lg-12">
                                 <button class="btn btn-success float-right ml-2" onclick="addItemsM()"><i class="fa fa-plus"></i> Agregar items</button>
                                 <button class="btn btn-success float-right" onclick="editarM()"><i class="fa fa-edit"></i> Modificar Cotizacion</button>
-                            </div>
+                            </div> -->
                             <div class="col-lg-12 my-2">
                                 <h4 class="text-center font-weight-bold">Datos de cotizacion</h4>
                             </div>

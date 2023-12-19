@@ -70,7 +70,7 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a href="{{url('loginProveedor/logoutPro')}}" class="nav-link">
+                    <a href="javascript:void(0)" class="nav-link logout">
                         <i class="nav-icon fas fa-sign-out-alt"></i><p>cerrar sesion</p>
                     </a>
                 </li>
@@ -78,3 +78,22 @@
         </nav>
     </div>
 </aside>
+<script>
+    $('.logout').on('click',function(){
+        Swal.fire({
+            title: "Finalizar Sesion",
+            text: "¿Esta seguro de cerrar sesion?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Si, cerrar sesion!",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('.overlayPagina').css("display","flex");
+                window.location.href = "{{url('loginProveedor/logoutPro')}}";
+            }
+        });
+    });
+</script>

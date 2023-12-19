@@ -80,9 +80,9 @@ function rulesItem()
         descripcion: {
             required: true,
         },
-        estado: {
-            required: true,
-        },
+        // estado: {
+        //     required: true,
+        // },
     };
 }
 function initValidateItem()
@@ -139,6 +139,6 @@ function limpiarFormItem()
 {
 	cleanFv('fvitem');
     $('.inpItem').val('');
-    $('#estado').val('1');
+    // $('#estado').val('1');
 }
 </script>

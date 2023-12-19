@@ -151,6 +151,7 @@ class CotizacionController extends Controller
     }
     public function actGuardarCambios(Request $r)
     {
+        // dd($r->all());
         $tCot = TCotizacion::find($r->id);
         if($r->numeroCotizacion!=$tCot->numeroCotizacion)
         {
@@ -160,6 +161,22 @@ class CotizacionController extends Controller
                 return response()->json(['estado' => false, 'message' => 'El numero de cotizacion ya fue ingresado.']);
             }
         }
+        if ($r->hasFile('file')) 
+        {
+            // $rutaArchivo = 'public/cotizaciones/' . $tCot->archivo;
+            if (Storage::exists('public/cotizaciones/' . $tCot->archivo)) 
+            {
+                Storage::delete('public/cotizaciones/' . $tCot->archivo);
+            } 
+            $archivo = $r->file('file');
+            $nombreArchivo = time() . '_' . str_replace(' ', '',$archivo->getClientOriginalName());
+            if (Storage::put('public/cotizaciones/' . $nombreArchivo, file_get_contents($archivo))) 
+            {
+                $r->merge(['archivo' => $nombreArchivo]);
+            }
+            
+        }
+        
         // ---------------------------------------------------------------------------
         // $existeNumCot = TCotizacion::where('numeroCotizacion',$r->numeroCotizacion)->where('estado','1')->first();
         // if($existeNumCot!=null)
