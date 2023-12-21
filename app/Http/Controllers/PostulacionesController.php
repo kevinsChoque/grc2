@@ -34,6 +34,7 @@ class PostulacionesController extends Controller
 				'cotizacion.fechaFinalizacion',
             	'cotizacion.numeroCotizacion'
             )
+            ->where('cotizacion.estadoCotizacion','3')
             ->orderBy('cotizacion.idCot', 'desc')
             ->get();
             // dd(json_encode($registros));

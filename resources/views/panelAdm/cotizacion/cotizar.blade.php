@@ -164,7 +164,7 @@
                 	<div class="table-responsive">
 	                    <table class="w-100 table table-hover table-striped table-bordered">
 	                        <thead>
-	                            <tr class="text-center">
+	                            <tr class="text-center headTable">
 	                                <th class="align-middle" width="30%">Nombre</th>
 	                                <th class="align-middle" width="5%">U.M</th>
 	                                <th class="align-middle" width="5%">Cant.</th>
@@ -182,7 +182,7 @@
 	                            </tr> -->
 	                        </tbody>
 	                        <tfoot>
-	                        	<tr>
+	                        	<tr class="footTable">
 	                        		<td colspan="7" class="text-right">TOTAL:</td>
 	                        		<td colspan="1" class="text-center shadow bg-info"><span class="total font-weight-bold"></span></td>
 	                        	</tr>
@@ -220,11 +220,12 @@
 
 <script>
 	var flip=0;
+    var tipoCotizacion = '';
     $(document).ready( function () {
     	// fillRegistros();
     	initFv('fvcotpro',rules());
     	loadData();
-    	loadItemsCotizacion()
+    	// loadItemsCotizacion()
         $('.overlayPagina').css("display","none");
         $('.overlayRegistros').css("display","none");
   		// bsCustomFileInput.init();
@@ -532,6 +533,7 @@ var po='';
     		msjError("Ingrese todos los datos de los items.");
     	}
     }
+    
     function loadData()
     {
     	// console.log('entro')
@@ -543,6 +545,10 @@ var po='';
             method: 'post',
             headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
             success: function(r){
+                console.log('-------showProCot-------');
+                console.log(r.cot.tipo);
+                tipoCotizacion=r.cot.tipo;
+                console.log('-------showProCot-------');
                 // showDataCotizacion(r);
                 // console.log(r.pro.tipoPersona);
                 $('.nombreRazon').val(r.pro.tipoPersona=="PERSONA NATURAL"?
@@ -553,9 +559,35 @@ var po='';
                 $('.celular').val(r.pro.celular);
                 $('.correo').val(r.pro.correo);
                 var dir = $('.cotFile').attr('href');
-                $('.cotFile').attr('href',dir+'/'+r.cot.archivo);				
+                $('.cotFile').attr('href',dir+'/'+r.cot.archivo);	
+                flexTable();	
+                loadItemsCotizacion();		
             }
         });
+    }
+    function flexTable()
+    {
+        let head1 = '<th class="align-middle" width="30%">Nombre</th>'+
+        '<th class="align-middle" width="5%">U.M</th>'+
+        '<th class="align-middle" width="5%">Cant.</th>'+
+        '<th class="align-middle" width="10%">Garantia</th>'+
+        '<th class="align-middle" width="10%">marca</th>'+
+        '<th class="align-middle" width="10%">modelo</th>'+
+        '<th class="align-middle" width="10%">Precio</th>'+
+        '<th class="align-middle" width="7%">Subtotal</th>'+
+        '<th class="align-middle" width="13%">Ficha tecnica</th>';
+        let head2 = '<th class="align-middle" width="40%">Nombre</th>'+
+        '<th class="align-middle" width="5%">U.M</th>'+
+        '<th class="align-middle" width="5%">Cant.</th>'+
+        '<th class="align-middle" width="15%">Precio</th>'+
+        '<th class="align-middle" width="12%">Subtotal</th>'+
+        '<th class="align-middle" width="23%">Ficha tecnica</th>';
+        let foot1 = '<td colspan="7" class="text-right">TOTAL:</td>'+
+                    '<td colspan="1" class="text-center shadow bg-info"><span class="total font-weight-bold"></span></td>';
+        let foot2 = '<td colspan="4" class="text-right">TOTAL:</td>'+
+                    '<td colspan="1" class="text-center shadow bg-info"><span class="total font-weight-bold"></span></td>';
+        $('.headTable').html(tipoCotizacion=='Bienes'?head1:head2);
+        $('.footTable').html(tipoCotizacion=='Bienes'?foot1:foot2);
     }
     function loadItemsCotizacion()
 	{
@@ -566,21 +598,31 @@ var po='';
 	        dataType: 'json',
 	        headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
 	        success: function (r) {
-	        	// console.log('--------------');
-	         //    console.log(r);
-	         //    console.log('--------------');
+	        	console.log('-------loadSegunCotizacion-------');
+	            console.log(r);
+	            console.log('-------loadSegunCotizacion-------');
 	            let idFila = '';
 	            var html = '';
+                let segunTipo = '';
 	            for (var i = 0; i < r.data.length; i++) 
 	            {
+                    if(tipoCotizacion!="Servicios")
+                    {
+                        segunTipo = '<td class="text-center"><input type="text" class="form-control garantia px-1"></td>' +
+                        '<td class="text-center"><input type="text" class="form-control marca px-1"></td>' +
+                        '<td class="text-center"><input type="text" class="form-control modelo px-1"></td>';
+                    }
 	                idFila = localStorage.getItem('idCot')+r.data[i].idItm;
 	                html += '<tr class="itemsCotizacion fila'+idFila+'">' +
 	                    '<td class="font-weight-bold idCi nombreItem" data-id="'+novDato(r.data[i].idCi)+'">' + novDato(r.data[i].nombre) +'</td>' +
 	                    '<td class="text-center umItem"><span class="font-weight-bold badge badge-light um'+idFila+'">'+ novDato(r.data[i].nombreUm) + '</td>' +
 	                    '<td class="text-center cantItem cant'+r.data[i].idItm+'">' + r.data[i].cantidad + '</td>' +
-	                    '<td class="text-center">' + '<input type="text" class="form-control garantia px-1">' + '</td>' +
-	                    '<td class="text-center">' + '<input type="text" class="form-control marca px-1">' + '</td>' +
-	                    '<td class="text-center">' + '<input type="text" class="form-control modelo px-1">' + '</td>' +
+                        segunTipo +
+
+	                    // '<td class="text-center">' + '<input type="text" class="form-control garantia px-1">' + '</td>' +
+	                    // '<td class="text-center">' + '<input type="text" class="form-control marca px-1">' + '</td>' +
+	                    // '<td class="text-center">' + '<input type="text" class="form-control modelo px-1">' + '</td>' +
+
 	                    '<td class="text-center">' + 
 							'<input type="text" class="form-control precio px-1" onblur="calcSubTotal(this,'+r.data[i].idItm+');">' +
 	                    '</td>' +

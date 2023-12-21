@@ -205,8 +205,8 @@
                     </form>
                 </div>
                 <div class="card-footer py-1 border-transparent">
-                    <button type="button" class="btn btn-success float-right guardar ml-2"><i class="fa fa-save"></i> Guardar</button>
-                    <button type="button" class="btn btn-light float-right" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success float-right guardar ml-2"><i class="fa fa-save"></i> Guardar Cotizacion</button>
+                    <!-- <button type="button" class="btn btn-light float-right" data-dismiss="modal"><i class="fa fa-times"></i> Cancelar</button> -->
                 </div>
             </div>
         </div>

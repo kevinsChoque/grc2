@@ -31,7 +31,7 @@ class VerifyDate extends Command
         // $r->descripcion = 'csa';
         // $r->save();
 
-        $cotizacionesVencidas = TCotizacion::where('fechaFinalizacion', '>', Carbon::now()->toDateString())->get();
+        $cotizacionesVencidas = TCotizacion::where('fechaFinalizacion', '<', Carbon::now()->toDateString())->get();
 
         foreach ($cotizacionesVencidas as $cotizacion) 
         {

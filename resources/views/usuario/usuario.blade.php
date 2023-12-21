@@ -43,7 +43,7 @@
                                         <th class="text-center" data-priority="2">Nombre</th>
                                         <th class="text-center" data-priority="3">Usuario</th>
                                         <th class="text-center" data-priority="4">Tipo</th>
-                                        <th class="text-center" data-priority="4">Fechas</th>
+                                        <th class="text-center" data-priority="4">F.Registro</th>
                                         <th class="text-center" data-priority="4">Estado</th>
                                         <th class="text-center" data-priority="1">Opc.</th>
                                     </tr>
@@ -96,13 +96,16 @@ localStorage.setItem("sba",3);
                 let nombre = '';
                 for (var i = 0; i < r.data.length; i++) 
                 {
+                    // '<td class="text-center">' + verificarFecha(novDato(result.data[i].fechaInscripcion)) + '</td>' +
+                    // '<td>' + formatoDateHours(result.data[i].fechaRegistro) + '</td>' +
+                    // '<td>' + verificarFecha(novDato(result.data[i].fechaActualizacion)) + '</td>' +
                 	nombre = novDato(r.data[i].nombre) + ' ' + novDato(r.data[i].apellidoPaterno) + ' ' + novDato(r.data[i].apellidoMaterno);
                     html += '<tr>' +
                         '<td class="text-center font-weight-bold"><i class="fa fa-id-card"></i> ' + novDato(r.data[i].dni) + '</td>' +
                         '<td class="text-left">' + nombre + '</td>' +
                         '<td class="text-center font-weight-bolder font-italic">' + novDato(r.data[i].usuario) + '</td>' +
                         '<td class="text-center">' + badgeAccordingUser(r.data[i].tipo) + '</td>' +
-                        '<td class="text-center">' + novDato(r.data[i].fr) + '</td>' +
+                        '<td class="text-center">' + formatoDateHours(r.data[i].fr) + '</td>' +
                         '<td class="text-center">' + stateRecord(r.data[i].estado) +'</td>' +
                         '<td class="text-center">' + 
                             '<div class="btn-group btn-group-sm" role="group">'+
@@ -118,6 +121,27 @@ localStorage.setItem("sba",3);
         });
         
     }
+    // ------------------
+    function verificarFecha(valor)
+    {
+        if(valor=='--')
+        {
+            return valor;
+        }
+        return formatoDateHours(valor);
+    }
+    function formatoDateHours(fecha)
+    {
+        var date = new Date(fecha);
+        const months = ["ENE", "FEB", "MAR","APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"];
+        const formatDate = (date)=>{
+            let formatted_date = '<span class="badge badge-light"><i class="fa fa-calendar-alt"></i> '+date.getDate() + "-" + months[date.getMonth()] + "-" + date.getFullYear()+'</span> ';
+            let formatted_hours = '<span class="badge badge-light"><i class="fa fa-clock"></i> '+date.getHours() + ":" + date.getMinutes()+'</span>';
+            return formatted_date+formatted_hours;
+        }
+        return formatDate(date);
+    }
+    // ----------------
     function eliminar(id)
     {
         Swal.fire({

@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 // use Illuminate\Support\Str;
 use Carbon\Carbon;
 
+use Illuminate\Support\Str;
+
 use App\Models\TCotizacion;
 use App\Models\TCotxitm;
 use App\Models\TItem;
@@ -30,6 +32,8 @@ class CotizacionController extends Controller
 	        if (Storage::put('public/cotizaciones/' . $nombreArchivo, file_get_contents($archivo))) 
 	        {
                 $tUsu = Session::get('usuario');
+
+                // $r->merge(['idCot' => Str::uuid()]);
                 $r->merge(['idUsu' => $tUsu->idUsu]);
 	        	$r->merge(['estado' => 1]);
                 $r->merge(['estadoCotizacion' => 1]);
@@ -58,6 +62,7 @@ class CotizacionController extends Controller
     }
     public function actListar()
     {
+        // dd((string) Str::uuid());
         // dd($tUsu);
         // dd($tUsu->idUsu);
     	// $registros = TCotizacion::orderBy('idCot','desc')->get();

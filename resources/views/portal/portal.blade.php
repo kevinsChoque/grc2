@@ -15,6 +15,8 @@
     <link rel="stylesheet" href="{{asset('adminlte3/dist/css/adminlte.min.css')}}">
     <script src="{{asset('js/helper.js')}}"></script>
     <link rel="stylesheet" href="{{asset('css/spinersAdmin.css')}}">
+    <link rel="stylesheet" href="{{asset('adminlte3/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css')}}">
+    <script src="{{asset('adminlte3/plugins/sweetalert2/sweetalert2.min.js')}}"></script>
 <link rel="stylesheet" href="{{asset('cdn/jquery.dataTables.min.css')}}">
     <style>
     	/*.hoverLink:hover{
@@ -89,7 +91,7 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="form-group col-lg-12">
+                            <!-- <div class="form-group col-lg-12">
                                 <label class="m-0">Rubro: <span class="text-danger">*</span> <i class="fa fa-info-circle text-info"></i></label>
                                 <div class="input-group">
                                     <div class="input-group-prepend">
@@ -97,7 +99,7 @@
                                     </div>
                                     <input type="text" class="form-control soloNumeros input" id="numeroCotizacion" name="numeroCotizacion">
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="form-group col-lg-6">
                                 <label class="m-0">Fecha de Inicio: <span class="text-danger">*</span> <i class="fa fa-info-circle text-info"></i></label>
                                 <div class="input-group">
@@ -165,18 +167,18 @@
     </style>
     <div class="container-fluid pt-3" style="background-image: url('{{asset('img/portal/bgg.jpg')}}')">
         <div class="row justify-content-center">
-            <div class="col-lg-10">
+            <div class="col-lg-11">
                 <div class="card">
                     <div class="card-body">
                         <div class="contenedorRegistros" style="display: none;">
                             <table id="registros" class="table table-hover table-bordered dt-responsive nowrap">
                                 <thead class="thead-light">
                                     <tr>
-                                        <th class="text-center text-uppercase" data-priority="1" width="10%">tipo</th>
-                                        <th class="text-center text-uppercase" data-priority="2" width="10%">Numero</th>
-                                        <th class="text-center text-uppercase" data-priority="3" width="60%">Concepto</th>
-                                        <th class="text-center text-uppercase" data-priority="4" width="10%">Fecha</th>
-                                        <th class="text-center text-uppercase" data-priority="1" width="10%">Acciones</th>
+                                        <th class="align-middle text-center text-uppercase" data-priority="2" width="10%">NRO <br> COTIZACION</th>
+                                        <th class="align-middle text-center text-uppercase" data-priority="1" width="10%">TIPO</th>
+                                        <th class="align-middle text-center text-uppercase" data-priority="3" width="55%">DESCRIPCION COTIZACION</th>
+                                        <th class="align-middle text-center text-uppercase" data-priority="4" width="5%">FECHA DE <br> ENTREGA Y <br> ACTO PUBLICO</th>
+                                        <th class="align-middle text-center text-uppercase" data-priority="1" width="20%">OPCIONES</th>
                                     </tr>
                                 </thead>
                                 <tbody id="data">
@@ -219,16 +221,25 @@
                 for (var i = 0; i < r.data.length; i++) 
                 {
                     html += '<tr>' +
+                        '<td class="text-left align-middle font-weight-bold">' + novDato(r.data[i].numeroCotizacion) + '</td>' +
                         '<td class="text-center font-weight-bold align-middle">' + novDato(r.data[i].tipo) + '</td>' +
-                        '<td class="text-center align-middle">' + novDato(r.data[i].numeroCotizacion) + '</td>' +
-                        '<td class="align-middle"><p class="m-0 ocultarText">' + novDato(r.data[i].concepto) + '</p></td>' +
-                        '<td class="text-left">INICIO:<br>' + 
-                            '<span><i class="fa fa-calendar-alt"></i> '+novDato(r.data[i].fechaCotizacion) +'<br><i class="fa fa-clock"></i> '+novDato(r.data[i].horaCotizacion) + '<span><br>FIN:<br>' +
+                        // ocultarText
+                        // '<td class="align-middle"><p class="m-0 text-uppercase">' + novDato(r.data[i].concepto) + '</p></td>' +
+                        // '<td class="align-middle"><p style="white-space: pre-line;margin-bottom: 0px;font-weight: 400;">SERVICIO DE ESTUDIO DE MECANICA DE SUELOS SEGUN TERMINOS DE REFERENCIA RECOTIZACION POR NO CUMPLIR CON LOS TERMINOS DE REFERENCIA</p></td>'+
+                        // -----
+                        '<td class="align-middle">'+
+                            '<p style="white-space: pre-line;margin-bottom: 0px;font-weight: 400;" class="text-uppercase">' + novDato(r.data[i].concepto) + '</p>'+
+                            '<label style="font-size: 12px;font-weight:normal;"><strong>Dependencia: </strong> Gobierno Regional de Apurímac </label>'+
+                            '<label style="font-size: 12px;font-weight:normal;" class="float-right"><strong>Fecha Publicación:</strong> 20/12/2023</label>'+
+                        '</td>'+
+                        '<td class="align-middle text-left">' + 
+                        // '<td class="text-left">INICIO:<br>' + 
+                            // '<span><i class="fa fa-calendar-alt"></i> '+novDato(r.data[i].fechaCotizacion) +'<br><i class="fa fa-clock"></i> '+novDato(r.data[i].horaCotizacion) + '<span><br>FIN:<br>' +
                             '<span><i class="fa fa-calendar-alt"></i> '+novDato(r.data[i].fechaFinalizacion) +'<br><i class="fa fa-clock"></i> '+novDato(r.data[i].horaFinalizacion) + '<span><br>' +
                         '</td>' +
                         '<td class="text-center align-middle">' + 
-                            '<a href="{{ route('ver-archivo') }}/'+r.data[i].archivo+'" target="_blank" class="btn btn-sm btn-primary mb-1"><i class="far fa-file-pdf"></i> Archivo</a><br>'+
-                            '<button type="button" class="btn btn-sm btn-success" title="Editar registro" onclick="cotizar('+r.data[i].idCot+');"><i class="far fa-envelope"></i> Cotizar</button>'+
+                            '<a href="{{ route('ver-archivo') }}/'+r.data[i].archivo+'" target="_blank" class="btn btn-sm btn-primary mb-1 btn-flat w-100 mb-2"><i class="far fa-file-pdf"></i> Descargar</a><br>'+
+                            '<button type="button" class="btn btn-sm btn-success btn-flat w-100" title="Editar registro" onclick="cotizar('+r.data[i].idCot+');"><i class="far fa-envelope"></i> Emviar Cotizacion</button>'+
                         '</td>' +
                     '</tr>';
                 }
@@ -258,6 +269,25 @@
                     },
                 } );
                 $('.overlayRegistros').css('display','none');
+            }
+        });
+    }
+
+    function cotizar()
+    {
+        Swal.fire({
+            title: "Ver Cotizacion",
+            text: "Para postular a la cotizacion debe de ingresar con su usuario",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#28a745",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Ingresar",
+            cancelButtonText: "Cancelar"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $('.overlayPagina').css("display","flex");
+                window.location.href = "{{url('loginProveedor/loginProveedor')}}";
             }
         });
     }

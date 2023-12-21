@@ -101,17 +101,18 @@ localStorage.setItem("sba",5);
                 let opcRec = '';
                 for (var i = 0; i < r.data.length; i++) 
                 {
+                    console.log(r.data[i].idCot);
                     if(r.data[i].estadoCotizacion=='1')
                     {
-                        opciones = '<button type="button" class="btn text-info"><i class="fa fa-plus" onclick="addItems('+r.data[i].idCot+');"></i></button>'+
-                            '<button type="button" class="btn text-success"><i class="fa fa-plus" onclick="addItems_b('+r.data[i].idCot+');"></i></button>'+
-                            '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+r.data[i].idCot+');"><i class="fa fa-edit" ></i></button>'+
-                            '<button type="button" class="btn text-success" title="Editar registro" onclick="editar_b('+r.data[i].idCot+');"><i class="fa fa-edit" ></i></button>'+
+                        opciones = '<button type="button" class="btn text-info" title="Agregar items" onclick="addItems('+r.data[i].idCot+');"><i class="fa fa-plus"></i></button>'+
+                            // '<button type="button" class="btn text-success"><i class="fa fa-plus" onclick="addItems_b('+r.data[i].idCot+');"></i></button>'+
+                            '<button type="button" class="btn text-info" title="Editar registro" onclick="editar('+r.data[i].idCot+');"><i class="fa fa-edit"></i></button>'+
+                            // '<button type="button" class="btn text-success" title="Editar registro" onclick="editar_b('+r.data[i].idCot+');"><i class="fa fa-edit" ></i></button>'+
                             '<button type="button" class="btn text-danger" title="Eliminar registro" onclick="eliminar('+r.data[i].idCot+');"><i class="fa fa-trash"></i></button>';
                     }
-                    if(r.data[i].estadoCotizacion == '2')
+                    if(r.data[i].estadoCotizacion == '3')
                     {
-                        opcRec = '<button type="button" class="btn text-info" onclick="showRecotizar(\''+r.data[i].idCot+'\')"><i class="fa fa-calendar-alt"></i></button>';
+                        opcRec = '<button type="button" class="btn text-info" onclick="showRecotizar(\''+r.data[i].idCot+'\')" title="Recotizar"><i class="fa fa-calendar-alt"></i></button>';
                     }
                     html += '<tr>' +
                         @if(session()->get('usuario')->tipo=="administrador")
@@ -122,11 +123,11 @@ localStorage.setItem("sba",5);
                         '<td class="text-center">' + badgeTipoCot(r.data[i].tipo) +'</td>' +
                         '<td class="text-center">' + novDato(r.data[i].fechaFinalizacion) + '</td>' +
                         // '<td class="text-center">' + estadoCotizacion(r.data[i].estadoCotizacion) + '<button class="btn text-info" onclick="changeEstadoCot('+r.data[i].idCot+','+r.data[i].numeroCotizacion+')"><i class="fa fa-edit"></i></button></td>' +
-                        '<td class="text-center">' + segunEstadoCotizacion(r.data[i]) + '</td>' +
+                        '<td class="text-center">' + estadoCotizacion(r.data[i].estadoCotizacion) + '</td>' +
                         '<td class="text-center">' + 
                             '<div class="btn-group btn-group-sm" role="group">'+
-                                '<button type="button" class="btn text-info" onclick="showCotizacion('+r.data[i].idCot+')"><i class="fa fa-eye"></i></button>'+
-                                '<button type="button" class="btn text-info" onclick="showFile(\''+r.data[i].archivo+'\')"><i class="fa fa-file-pdf"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Ver cotizacion" onclick="showCotizacion('+r.data[i].idCot+')"><i class="fa fa-eye"></i></button>'+
+                                '<button type="button" class="btn text-info" title="Ver archivo" onclick="showFile(\''+r.data[i].archivo+'\')"><i class="fa fa-file-pdf"></i></button>'+
                                 opcRec +
                                 opciones +
                                 // '<button type="button" class="btn text-info"><i class="fa fa-plus" onclick="addItems('+r.data[i].idCot+');"></i></button>'+

@@ -68,15 +68,22 @@ class PaCotizacionController extends Controller
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
         // ------------------------------------------------------------------
+        $tipo='';
         if($elementosNoNulos==1)
         {
-        	$sql = "SELECT * FROM cotizacion where estadoCotizacion=2 and tipo='".$r->tipo."'";
+            // dd('estra aki');
+            if(!is_null($r->tipo) && $r->tipo!=0)
+            {   
+                $tipo=" AND tipo = '".$r->tipo."' ";
+            }
+        	$sql = "SELECT * FROM cotizacion where estadoCotizacion=2 ".$tipo;
         }
         else
         {
 	        $numeroCotizacion='';
 	        $concepto='';
 	        $entreFechas='';
+            
 	        if(!is_null($r->numeroCotizacion))
 	        {
 	        	$numeroCotizacion=" or numeroCotizacion=".$r->numeroCotizacion;
@@ -92,10 +99,15 @@ class PaCotizacionController extends Controller
 	        	$entreFechas=" or ( fechaCotizacion>='".$r->fechaInicial."' and fechaFinalizacion<='".$r->fechaFinal."')";
 	            // array_push($array, $r->concepto);
 	        }
+            if(!is_null($r->tipo) && $r->tipo!=0)
+            {   
+                $tipo=" AND tipo = '".$r->tipo."' ";
+            }
 	// SELECT * FROM cotizacion where estadoCotizacion=2 and (tipo='Bienes' or numeroCotizacion=369 or concepto like '%kevins%');-->malo
 	// SELECT * FROM cotizacion where estadoCotizacion=2 and tipo='Bienes' and( numeroCotizacion=369 or concepto like '%kevins%' or (fechaCotizacion>='2023-11-08' and fechaFinalizacion<='2023-12-09'));-->MEJOR
 	        // $sql = "SELECT * FROM cotizacion where estadoCotizacion=2 and ( tipo='".$r->tipo."' ".$numeroCotizacion.$concepto.')';
-	        $sql = "SELECT * FROM cotizacion where (estadoCotizacion=5 or estadoCotizacion=2) and tipo='".$r->tipo."' and ( idCot=0 ".$numeroCotizacion.$concepto.$entreFechas.')';
+	        $sql = "SELECT * FROM cotizacion where (estadoCotizacion=5 or estadoCotizacion=2) ".$tipo." and ( idCot=0 ".$numeroCotizacion.$concepto.$entreFechas.')';
+            // dd($sql);
         }
         // dd($sql);
         // $registros=DB::select($sql,$array);

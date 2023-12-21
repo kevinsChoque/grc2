@@ -36,8 +36,6 @@
 						<span class="shadow bg-info text-center font-weight-bold float-right p-2">total S/. 666</span>
 					</div>
 				</div>
-				<!-- <h4 class="card-title w-100">
-				</h4> -->
 			</div>
 		</a>
 		<div id="collapseOne" class="collapse" data-parent="#accordion" style="">
@@ -46,34 +44,6 @@
 			</div>
 		</div>
 	</div>
-	<!-- <div class="card card-primary card-outline">
-		<a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapseTwo" aria-expanded="false">
-			<div class="card-header">
-				<h4 class="card-title w-100">
-				2. Aenean massa
-				</h4>
-			</div>
-		</a>
-		<div id="collapseTwo" class="collapse" data-parent="#accordion" style="">
-			<div class="card-body">
-			Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
-			</div>
-		</div>
-	</div>
-	<div class="card card-primary card-outline">
-		<a class="d-block w-100 collapsed" data-toggle="collapse" href="#collapseThree" aria-expanded="false">
-			<div class="card-header">
-				<h4 class="card-title w-100">
-				3. Donec quam felis
-				</h4>
-			</div>
-		</a>
-		<div id="collapseThree" class="collapse" data-parent="#accordion" style="">
-			<div class="card-body">
-			Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim.
-			</div>
-		</div>
-	</div> -->
 </div>
 <div class="container-fluid">
 	<div class="row">
@@ -159,12 +129,12 @@
             </div>
 		</div>
 		<div class="col-md-3">
-            <div class="card card-success card-outline shadow">
+            <div class="card card-primary card-outline shadow">
             	<div class="overlay ovCot">
                     <div class="spinner"></div>
                 </div>
             	<div class="ribbon-wrapper ribbon-lg">
-                    <div class="ribbon bg-success">Publicado</div>
+                    <div class="ribbon bg-primary">Finalizado</div>
               	</div>
                	<div class="card-body box-profile p-0">
                		<!-- <a href="{{ route('ver-archivo') }}" class="d-block fileCotizacion font-weight-bold" target="_blank">-</a> -->
@@ -290,7 +260,7 @@ localStorage.setItem("sba",7);
 												'<div class="row">'+
 													'<div class="col-lg-9">'+
 														'<div class="user-block w-100">'+
-									                        '<img class="img-circle img-bordered-sm" src="{{asset('img/admin/funcionarios/icono.jpg')}}" alt="user image">'+
+									                        '<img class="img-circle img-bordered-sm shadow mr-3" src="{{asset('img/admin/funcionarios/icono.jpg')}}" alt="user image">'+
 									                        '<span class="username">'+
 									                          	'<a href="#">'+novDato(r.data[i].tipoPersona+': '+name)+'</a>'+
 									                        '</span>'+
@@ -459,7 +429,7 @@ localStorage.setItem("sba",7);
             headers: {'X-CSRF-TOKEN': "{{ csrf_token() }}"},
             success: function (r) {
             	console.log(r);
-                let cot = "<i class='fa fa-file-pdf'></i> COTIZACION("+r.data.tipo+"): <br>"+r.data.numeroCotizacion;
+                let cot = "<i class='fa fa-file-pdf'></i> COTIZACION<br>("+r.data.tipo+") <br>#"+r.data.numeroCotizacion;
                 $('.cotizacion').html(novDato(cot));
                 $('.items').html('Items: '+r.data.cantidad);
 

@@ -21,8 +21,17 @@ class Kernel extends ConsoleKernel
         echo('kernel');
         // CambiarEstadoCotizacion::dispatch();
         // $schedule->job(new CambiarEstadoCotizacion())->everyFiveSeconds();
-        // $schedule->command('app:verify-date')->everyFiveSeconds();
-        $schedule->command('app:verify-date')->everyThirtyMinutes();
+
+
+
+
+
+
+        // --------------------
+        // este es test, se usa para no esperar mucho
+        $schedule->command('app:verify-date')->everyFiveSeconds();
+        // este es el oficial
+        // $schedule->command('app:verify-date')->everyThirtyMinutes();
         echo('--- end');
     }
 

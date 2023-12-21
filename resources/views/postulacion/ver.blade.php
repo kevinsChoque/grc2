@@ -6,7 +6,7 @@
         <div class="row mb-2">
             <div class="col-sm-6"><h1 class="m-0">Postulaciones</h1></div>
             <div class="col-sm-6">
-                <a href="{{url('cotizacion/registrar')}}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Nueva</a>
+                <!-- <a href="{{url('cotizacion/registrar')}}" class="btn btn-success float-right"><i class="fa fa-plus"></i> Nueva</a> -->
                 <ol class="breadcrumb float-sm-right" style="display: none;">
                     <li class="breadcrumb-item"><a href="#">Home</a></li>
                     <li class="breadcrumb-item active">Dashboard v3</li>
@@ -90,13 +90,15 @@ localStorage.setItem("sba",7);
                 for (var i = 0; i < r.data.length; i++) 
                 {
                     html += '<tr>' +
-                        '<td class="text-center font-weight-bold">' + r.data[i].numeroCotizacion + '</td>' +
-                        '<td class="text-left"><p class="m-0 ocultarTextIzqNameUser">' + novDato(r.data[i].concepto) + '</p></td>' +
-                        '<td class="text-center">' + badgeTipoCot(r.data[i].tipo) +'</td>' +
-                        '<td class="text-center">' + novDato(r.data[i].fechaFinalizacion) + '</td>' +
-                        '<td class="text-center font-weight-bold">' + novDato(r.data[i].cantidad) + ' <i class="fa fa-user"></i></td>' +
-                        '<td class="text-center">' + segunEstadoCotizacion(r.data[i]) + '</td>' +
-                        '<td class="text-center">' + 
+                        '<td class="align-middle text-center font-weight-bold">' + r.data[i].numeroCotizacion + '</td>' +
+                        '<td class="align-middle text-left"><p class="m-0 ocultarTextIzqNameUser">' + novDato(r.data[i].concepto) + '</p></td>' +
+                        '<td class="align-middle text-center">' + badgeTipoCot(r.data[i].tipo) +'</td>' +
+                        '<td class="align-middle text-center">' + novDato(r.data[i].fechaFinalizacion) + '</td>' +
+                        '<td class="align-middle text-center font-weight-bold">' + novDato(r.data[i].cantidad) + ' <i class="fa fa-user"></i></td>' +
+                        // una cotizacion cuando finaliza no puede ser cambiado, 
+                        // '<td class="text-center">' + segunEstadoCotizacion(r.data[i]) + '</td>' +
+                        '<td class="align-middle text-center">' + estadoCotizacion(r.data[i].estadoCotizacion) + '</td>' +
+                        '<td class="align-middle text-center">' + 
                             '<button type="button" class="btn text-info" onclick="showPostulaciones(\''+r.data[i].idCot+'\')"><i class="fa fa-list-ol fa-lg"></i></button>'+
                         '</td></tr>';
                 }
@@ -107,6 +109,7 @@ localStorage.setItem("sba",7);
         });
         
     }
+    // una cotizacion cuando finaliza no puede ser cambiado, y esta funcion le agrega un boton de modificacion
     function segunEstadoCotizacion(cot)
     {
         let opcion = cot.estadoCotizacion == '5' || cot.estadoCotizacion == '2' ? '':'<button class="btn text-info" onclick="changeEstadoCot('+cot.idCot+','+cot.numeroCotizacion+')"><i class="fa fa-edit"></i></button>';

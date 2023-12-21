@@ -15,6 +15,12 @@
                 <span class="description-text">COT</span>
             </a>
         </li>
+        <li class="nav-item border-right infraccionPmsNavbar">
+            <a class="nav-link border-right" href="{{url('postulaciones/ver')}}" title="Registrar infraccion">
+                <i class="fas fa-plus d-none d-sm-inline-block"></i>
+                <span class="description-text">POS</span>
+            </a>
+        </li>
         <!-- <li class="nav-item border-right">
             <a class="nav-link border-right" href="{{url('presentacion/consultar')}}" title="Consultar placa" target="_blank">
                 <i class="fas fa-plus d-none d-sm-inline-block"></i>

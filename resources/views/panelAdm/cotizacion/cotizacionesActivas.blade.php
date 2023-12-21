@@ -57,58 +57,63 @@
 </script>
 @else
 <div class="container-fluid mt-3">
-    <div class="card">
+    <div class="card card-primary card-outline">
         <div class="overlay overlayRegistros">
             <div class="spinner"></div>
         </div>
     	<div class="card-body">
     		<h3 class="text-center font-weight-bold font-italic">COTIZACIONES EN LINEA</h3>
     		<form id="fvbuscot">
-    		<div class="row">
-    			<div class="col-lg-6">
-    				<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Nro de cotizacion:</label>
-						<div class="col-sm-6">
-							<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="form-control input">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Descripcion:</label>
-						<div class="col-sm-6">
-							<input type="text" id="concepto" name="concepto" class="form-control input">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Fecha Inicial:</label>
-						<div class="col-sm-6">
-							<input type="date" id="fechaInicial" name="fechaInicial" class="form-control input">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Fecha Final:</label>
-						<div class="col-sm-6">
-							<input type="date" id="fechaFinal" name="fechaFinal" class="form-control input">
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<div class="form-group row">
-						<label class="col-sm-3 col-form-label">Tipo:</label>
-						<div class="col-sm-6">
-							<select name="tipo" id="tipo" class="form-control">
-								<option disabled> Seleccione una opcion</option>
-								<option value="Bienes">BIENES</option>
-								<option value="Servicios">SERVICIOS</option>
-							</select>
-						</div>
-					</div>
-				</div>
+    		<div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="row">
+            			<div class="col-lg-6 col-12">
+            				<div class="form-group row">
+        						<label class="col-lg-3 col-sm-4 col-12 col-form-label">Nro de cotizacion:</label>
+        						<div class="col-lg-6 col-sm-8 col-12">
+        							<input type="text" id="numeroCotizacion" name="numeroCotizacion" class="form-control input">
+        						</div>
+        					</div>
+        				</div>
+        				<div class="col-lg-6">
+        					<div class="form-group row">
+        						<label class="col-sm-3 col-form-label">Descripcion:</label>
+        						<div class="col-sm-6">
+        							<input type="text" id="concepto" name="concepto" class="form-control input">
+        						</div>
+        					</div>
+        				</div>
+        				<div class="col-lg-6">
+        					<div class="form-group row">
+        						<label class="col-sm-3 col-form-label">Fecha Inicial:</label>
+        						<div class="col-sm-6">
+        							<input type="date" id="fechaInicial" name="fechaInicial" class="form-control input">
+        						</div>
+        					</div>
+        				</div>
+        				<div class="col-lg-6">
+        					<div class="form-group row">
+        						<label class="col-sm-3 col-form-label">Fecha Final:</label>
+        						<div class="col-sm-6">
+        							<input type="date" id="fechaFinal" name="fechaFinal" class="form-control input">
+        						</div>
+        					</div>
+        				</div>
+        				<div class="col-lg-6">
+        					<div class="form-group row">
+        						<label class="col-sm-3 col-form-label">Tipo:</label>
+        						<div class="col-sm-6">
+        							<select name="tipo" id="tipo" class="form-control">
+        								<option disabled> Seleccione una opcion</option>
+                                        <option value="0" selected>Todos</option>
+        								<option value="Bienes">BIENES</option>
+        								<option value="Servicios">SERVICIOS</option>
+        							</select>
+        						</div>
+        					</div>
+        				</div>
+                    </div>
+                </div>
                 <!-- <div class="col-lg-6">
                     <button class="btn btn-success w-75 searchCot"><i class="fa fa-search"></i> Buscar Cotizacion</button>
                 </div> -->
